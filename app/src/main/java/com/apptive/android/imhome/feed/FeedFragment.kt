@@ -28,13 +28,16 @@ class FeedFragment:BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       // val sampleData=List(10,{Feed("홍길동", Date(),null,"sample contents")})
         val deco= RecyclerViewDecoration(0,0,0,15,requireContext())
         val adapter=FeedAdapter()
         val feedInteractor=FeedInteractor()
         feedInteractor.getData(feedInteractor.ref)
         feedInteractor.publishData.subscribe {
             adapter.refreshData(it)
+            binding.feedSwipeRefreshLayout.isRefreshing=false
+        }
+        feedInteractor.publishIsSuccess.subscribe{
+            binding.feedSwipeRefreshLayout.isRefreshing=false
         }
 
 
@@ -57,8 +60,8 @@ class FeedFragment:BaseFragment() {
         }
 
         binding.feedSwipeRefreshLayout.setOnRefreshListener {
-            //TODO(데이터 새로고침)
-            binding.feedSwipeRefreshLayout.isRefreshing=false
+            feedInteractor.getData(feedInteractor.ref)
+
         }
 
         binding.feedLogo.setOnClickListener {

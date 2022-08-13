@@ -29,6 +29,8 @@ class LoginFragment:BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         val rootView = inflater.inflate(R.layout.fragment_login, container, false)
 
         val id = rootView.findViewById<EditText>(R.id.idLogin)
@@ -39,6 +41,13 @@ class LoginFragment:BaseFragment() {
         buttonLogin.setOnClickListener {
 
             login(requireActivity(),id.text.toString(),password.text.toString())
+
+        }
+
+        if(currentUser!=null){
+            //이거 나중에 런치 화면에서 체크해서 넘기기로
+            Log.d("checfor","이미 로그인된 사용자 : ${currentUser.uid}")
+            findNavController().navigate(R.id.action_loginFragment_to_feedFragment)
 
         }
 
@@ -56,7 +65,7 @@ class LoginFragment:BaseFragment() {
     }
 
     private fun login(activity: Activity, email:String, password:String){
-        Log.d("checkfor",email +" @@@@@@@@@@@@@@@@ " +password)
+
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
