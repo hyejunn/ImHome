@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ImHomeToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:windowTitleSize">20sp</item>
+    </style>
+
+    <!--        "Theme.MaterialComponents.DayNight.NoActionBar"-->
+
+</resources>
