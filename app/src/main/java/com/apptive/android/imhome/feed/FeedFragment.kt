@@ -6,15 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apptive.android.imhome.R
 import com.apptive.android.imhome.baseClass.BaseFragment
 import com.apptive.android.imhome.baseClass.RecyclerViewDecoration
 import com.apptive.android.imhome.databinding.FragmentFeedBinding
+import com.apptive.android.imhome.signup.NicknameInteractor
 import java.util.*
 
 
 class FeedFragment:BaseFragment() {
+
+    private val args:FeedFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentFeedBinding
     override fun onCreateView(
@@ -28,6 +32,12 @@ class FeedFragment:BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val nickNameInteractor=NicknameInteractor()
+        nickNameInteractor.getDocumentData(nickNameInteractor.ref.document(args.userId))
+        nickNameInteractor.publishData.subscribe {
+            if(it.isNotEmpty())  binding.feedNickname.setText(it.first())
+        }
         val deco= RecyclerViewDecoration(0,0,0,15,requireContext())
         val adapter=FeedAdapter()
         val feedInteractor=FeedInteractor()

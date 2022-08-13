@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_feedFragment_to_writeFragment"
             app:destination="@id/writeFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
