@@ -18,8 +18,6 @@ import java.util.*
 
 class FeedFragment:BaseFragment() {
 
-    private val args:FeedFragmentArgs by navArgs()
-
     private lateinit var binding: FragmentFeedBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +32,6 @@ class FeedFragment:BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val nickNameInteractor=NicknameInteractor()
-        nickNameInteractor.getDocumentData(nickNameInteractor.ref.document(args.userId))
         nickNameInteractor.publishData.subscribe {
             if(it.isNotEmpty())  binding.feedNickname.setText(it.first())
         }

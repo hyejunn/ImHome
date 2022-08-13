@@ -47,7 +47,7 @@ class LoginFragment:BaseFragment() {
         if(currentUser!=null){
             //이거 나중에 런치 화면에서 체크해서 넘기기로
             Log.d("checfor","이미 로그인된 사용자 : ${currentUser.uid}")
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToFeedFragment(currentUser.uid))
+        //    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToFeedFragment(currentUser.uid))
 
         }
 
@@ -73,7 +73,7 @@ class LoginFragment:BaseFragment() {
 
                     val user = auth.currentUser
                     Log.d("checkfor", "signInWithEmail:success  | user : ${user?.uid}")
-                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToFeedFragment(currentUser?.uid.toString()))
+                  //  findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToFeedFragment(currentUser?.uid.toString()))
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("checkfor", "signInWithEmail:failure", task.exception)

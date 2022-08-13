@@ -14,6 +14,9 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.navigation.fragment.findNavController
 import com.apptive.android.imhome.R
 import com.apptive.android.imhome.baseClass.BaseFragment
+import com.apptive.android.imhome.feed.Feed
+import com.apptive.android.imhome.feed.FeedInteractor
+import java.util.*
 
 class WriteFragment: BaseFragment() {
     override fun onCreateView(
@@ -28,6 +31,13 @@ class WriteFragment: BaseFragment() {
         val image = rootView.findViewById<ImageView>(R.id.writeImageView)
         var categoryCK = false
 
+        val feedInteractor=FeedInteractor()
+        feedInteractor.publishCreateSuccess.subscribe {
+            Toast.makeText(activity, "작성 완료!", Toast.LENGTH_SHORT).show()
+            findNavController().popBackStack()
+        }
+
+
         writeButton.setOnClickListener {
             val content = ETcontent.text.toString()
             if (content == "") {
@@ -38,7 +48,9 @@ class WriteFragment: BaseFragment() {
             }
             else {
                 // db에 저장
-                findNavController().popBackStack()
+                val feed= Feed("닉네임1", Date(),null,content)
+                feedInteractor.createData(feed)
+
             }
         }
 
