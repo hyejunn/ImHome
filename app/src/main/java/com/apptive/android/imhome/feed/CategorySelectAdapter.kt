@@ -29,7 +29,7 @@ class CategorySelectAdapter:BaseAdapter<CategorySelectAdapter.CategorySelectView
                 setText(category)
 
                 setBackgroundResource(R.drawable.checkbox_custom)
-                setButtonIcon(null)
+                //setButtonIcon(null)
                 setPadding(30,10,30,10)
                 //setMinWidth(50)
                 setLayoutParams(ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT))
