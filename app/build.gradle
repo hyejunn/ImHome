@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+//safeArgs
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
 android {
     compileSdk 32
     dataBinding{ enabled true }
