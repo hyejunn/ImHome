@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.apptive.android.imhome.R
 import com.apptive.android.imhome.baseClass.BaseFragment
+import com.google.firebase.auth.FirebaseAuth
 
 class SignupFragment:BaseFragment() {
     override fun onCreateView(
@@ -25,6 +26,7 @@ class SignupFragment:BaseFragment() {
         val ETid = rootView.findViewById<EditText>(R.id.idSignup)
         val ETpassword = rootView.findViewById<EditText>(R.id.passwordSignup)
         val ETpwck = rootView.findViewById<EditText>(R.id.pwckSignup)
+        val ETemail=rootView.findViewById<EditText>(R.id.emailSignup)
         buttonBack.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -33,15 +35,34 @@ class SignupFragment:BaseFragment() {
             val id = ETid.text.toString()
             val password = ETpassword.text.toString()
             val pwck = ETpwck.text.toString()
-            if (nickname == "" || id == "" || password == "" || pwck == "") {
+            val email=ETemail.text.toString()
+            if (nickname == "" || id == "" || password == "" || pwck == ""||email=="") {
                 Toast.makeText(activity, "입력을 완료해주세요.", Toast.LENGTH_SHORT).show()
             }
+
             else if (password != pwck) {
                 Toast.makeText(activity, "비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
             }
             else {
                 // db에 저장
-                findNavController().popBackStack()
+                val auth = FirebaseAuth.getInstance()
+                //파이어베이스에 신규계정 등록하기
+                auth.createUserWithEmailAndPassword(
+                    email,
+                    password
+                )
+                    .addOnCompleteListener {
+                        if(it.isSuccessful){
+                            Toast.makeText(requireContext(),"회원가입 완료",Toast.LENGTH_SHORT).show()
+                            findNavController().popBackStack()
+                        }else{
+                        }
+                    }.addOnFailureListener {
+                        Toast.makeText(requireContext(),"회원가입 실패",Toast.LENGTH_SHORT).show()
+                        Log.d("회원가입", it.toString())
+                    }
+
+
             }
         }
         return rootView
