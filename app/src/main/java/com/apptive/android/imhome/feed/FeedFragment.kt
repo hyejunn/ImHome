@@ -28,10 +28,16 @@ class FeedFragment:BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val sampleData=List(10,{Feed("홍길동", Date(),null,"sample contents")})
+       // val sampleData=List(10,{Feed("홍길동", Date(),null,"sample contents")})
         val deco= RecyclerViewDecoration(0,0,0,15,requireContext())
         val adapter=FeedAdapter()
+        val feedInteractor=FeedInteractor()
+        feedInteractor.getData(feedInteractor.ref)
+        feedInteractor.publishData.subscribe {
+            adapter.refreshData(it)
+        }
+
+
         adapter.setOnCategorySelectChanged(object:FeedAdapter.CategoryCallBackListener{
             override fun onCategorySelectChangeCallback(clickedItem: List<String>) {
                 Toast.makeText(requireContext(),clickedItem.toString(),Toast.LENGTH_SHORT).show()
@@ -39,7 +45,7 @@ class FeedFragment:BaseFragment() {
             }
         })
 
-        adapter.refreshData(sampleData)
+      //  adapter.refreshData(sampleData)
         binding.feedContentsRecyclerVeiw.apply{
             addItemDecoration(deco)
             setAdapter(adapter)

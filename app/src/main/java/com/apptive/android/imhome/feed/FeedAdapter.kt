@@ -12,6 +12,7 @@ import com.apptive.android.imhome.baseClass.BaseAdapter
 import com.apptive.android.imhome.baseClass.RecyclerViewDecoration
 import com.apptive.android.imhome.databinding.ItemFeedBinding
 import com.apptive.android.imhome.utility.DateUtility
+import java.util.*
 
 class FeedAdapter:BaseAdapter<RecyclerView.ViewHolder,Feed>() {
 
@@ -98,8 +99,8 @@ class FeedAdapter:BaseAdapter<RecyclerView.ViewHolder,Feed>() {
     inner class FeedUnitViewHolder(private val binding:ItemFeedBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(item:Feed){
             //피드 바인딩
-            binding.itemFeedNickname.setText(item.nickname)
-            binding.itemFeedDate.setText(DateUtility.formatDate(item.date,"yyyy.MM.dd"))
+            binding.itemFeedNickname.setText(item.name)
+            binding.itemFeedDate.setText(DateUtility.formatDate(item.date?:Date(),"yyyy.MM.dd"))
             binding.itemFeedContents.setText(item.contents)
             if(item.image==null){
                 binding.itemFeedImage.setVisibility(View.GONE)
