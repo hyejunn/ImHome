@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/feedFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/feedFragment"
@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_feedFragment_to_writeFragment"
             app:destination="@id/writeFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -19,6 +22,9 @@
         <action
             android:id="@+id/action_loginFragment_to_signupFragment"
             app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"

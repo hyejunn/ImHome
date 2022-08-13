@@ -6,15 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apptive.android.imhome.R
 import com.apptive.android.imhome.baseClass.BaseFragment
 import com.apptive.android.imhome.baseClass.RecyclerViewDecoration
 import com.apptive.android.imhome.databinding.FragmentFeedBinding
+import com.apptive.android.imhome.signup.NicknameInteractor
 import java.util.*
 
 
 class FeedFragment:BaseFragment() {
+
+    private val args:FeedFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentFeedBinding
     override fun onCreateView(
@@ -29,9 +33,24 @@ class FeedFragment:BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sampleData=List(10,{Feed("홍길동", Date(),null,"sample contents")})
+        val nickNameInteractor=NicknameInteractor()
+        nickNameInteractor.getDocumentData(nickNameInteractor.ref.document(args.userId))
+        nickNameInteractor.publishData.subscribe {
+            if(it.isNotEmpty())  binding.feedNickname.setText(it.first())
+        }
         val deco= RecyclerViewDecoration(0,0,0,15,requireContext())
         val adapter=FeedAdapter()
+        val feedInteractor=FeedInteractor()
+        feedInteractor.getData(feedInteractor.ref)
+        feedInteractor.publishData.subscribe {
+            adapter.refreshData(it)
+            binding.feedSwipeRefreshLayout.isRefreshing=false
+        }
+        feedInteractor.publishIsSuccess.subscribe{
+            binding.feedSwipeRefreshLayout.isRefreshing=false
+        }
+
+
         adapter.setOnCategorySelectChanged(object:FeedAdapter.CategoryCallBackListener{
             override fun onCategorySelectChangeCallback(clickedItem: List<String>) {
                 Toast.makeText(requireContext(),clickedItem.toString(),Toast.LENGTH_SHORT).show()
@@ -39,7 +58,7 @@ class FeedFragment:BaseFragment() {
             }
         })
 
-        adapter.refreshData(sampleData)
+      //  adapter.refreshData(sampleData)
         binding.feedContentsRecyclerVeiw.apply{
             addItemDecoration(deco)
             setAdapter(adapter)
@@ -51,8 +70,8 @@ class FeedFragment:BaseFragment() {
         }
 
         binding.feedSwipeRefreshLayout.setOnRefreshListener {
-            //TODO(데이터 새로고침)
-            binding.feedSwipeRefreshLayout.isRefreshing=false
+            feedInteractor.getData(feedInteractor.ref)
+
         }
 
         binding.feedLogo.setOnClickListener {

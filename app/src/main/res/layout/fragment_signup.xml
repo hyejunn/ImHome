@@ -18,6 +18,18 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
+        android:id="@+id/emailSignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:ems="10"
+        android:hint="이메일"
+        app:layout_constraintBottom_toTopOf="@+id/nicknameSignup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
         android:id="@+id/idSignup"
         android:layout_width="0dp"
         android:layout_height="50dp"

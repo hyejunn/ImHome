@@ -8,10 +8,11 @@
         <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/drawable/checkbox_custom.xml" value="0.1855" />
         <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/drawable/drawable_r10.xml" value="0.1855" />
         <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/drawable/drawable_r15.xml" value="0.1855" />
+        <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/drawable/drawable_r30.xml" value="0.1855" />
         <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/layout/fragment_feed.xml" value="0.2" />
-        <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/layout/fragment_login.xml" value="0.17407407407407408" />
-        <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/layout/fragment_signup.xml" value="0.17407407407407408" />
+        <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/layout/fragment_feed.xml" value="0.33" />
+        <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/layout/fragment_signup.xml" value="0.5" />
         <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/layout/fragment_write.xml" value="0.22" />
         <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/layout/item_feed.xml" value="0.25" />
         <entry key="..\:/Users/USER/Desktop/ImHome/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1855" />
