@@ -20,6 +20,7 @@ import com.apptive.android.imhome.R
 import com.apptive.android.imhome.baseClass.BaseFragment
 import com.apptive.android.imhome.feed.Feed
 import com.apptive.android.imhome.feed.FeedInteractor
+import com.apptive.android.imhome.utility.DateUtility
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
@@ -41,13 +42,13 @@ class WriteFragment: BaseFragment() {
         val ETcontent = rootView.findViewById<EditText>(R.id.writeContent)
         val image = rootView.findViewById<ImageView>(R.id.writeImageView)
         var categoryCK = false
-        var category:String=""
 
         fbStorage = FirebaseStorage.getInstance()
 
 
         val feedInteractor=FeedInteractor()
         feedInteractor.publishCreateSuccess.subscribe {
+            funImageUpload(rootView, it)
             Toast.makeText(activity, "작성 완료!", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
         }
@@ -63,11 +64,12 @@ class WriteFragment: BaseFragment() {
             }
             else {
                 // db에 저장
-                val feed= Feed("","닉네임1", Date(),null,content,category)
+                val id = DateUtility.formatDate(Date(),"yyyyMMdd")
+                val feed= Feed(id,"닉네임1", Date(),id,content,category)
 
-                funImageUpload(rootView)
 
-                feedInteractor.createData(feed)
+
+                feedInteractor.createDataWithId(id, feed)
 
             }
         }
@@ -136,10 +138,9 @@ class WriteFragment: BaseFragment() {
             }
         }
     }
-    private fun funImageUpload(view : View){
-
-        var timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        var imgFileName = "IMAGE_" + timeStamp + "_.png"
+    private fun funImageUpload(view : View, feed : Feed){
+        val id= feed.id
+        var imgFileName = id + ".jpeg"
         var storageRef = fbStorage?.reference?.child(imgFileName)
         Log.d("please", "plz")
         storageRef?.putFile(ImageData!!)?.addOnSuccessListener {

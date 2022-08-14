@@ -17,6 +17,7 @@ class FeedInteractor : BaseInteractor<Feed>() {
         val id=document.getId()
         val name=document["name"] as? String
         val date=document["date"] as? Timestamp
+        val image=document["image"] as? String
         val contents=document["contents"] as? String
         val category=document["category"] as? String
 
