@@ -18,8 +18,11 @@ class FeedInteractor : BaseInteractor<Feed>() {
         val name=document["name"] as? String
         val date=document["date"] as? Timestamp
         val contents=document["contents"] as? String
+        val category=document["category"] as? String
 
-        val feed=Feed(name.toString(), date?.toDate(),null,contents.toString())
+        Log.d("checkforfor",category.toString())
+
+        val feed=Feed(id,name.toString(), date?.toDate(),null,contents.toString(),category.toString())
 
         return feed
     }

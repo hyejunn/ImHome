@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import com.apptive.android.imhome.R
 import com.apptive.android.imhome.baseClass.BaseFragment
@@ -19,24 +20,25 @@ class SignupFragment:BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val nicknameInteractor=NicknameInteractor()
         val rootView = inflater.inflate(R.layout.fragment_signup, container, false)
-        val buttonBack = rootView.findViewById<Button>(R.id.buttonbackSignup)
+       val toolbar=rootView.findViewById<Toolbar>(R.id.signupToolbar)
         val buttonJoin = rootView.findViewById<Button>(R.id.buttonJoinSignup)
         val ETnickname = rootView.findViewById<EditText>(R.id.nicknameSignup)
-        val ETid = rootView.findViewById<EditText>(R.id.idSignup)
         val ETpassword = rootView.findViewById<EditText>(R.id.passwordSignup)
         val ETpwck = rootView.findViewById<EditText>(R.id.pwckSignup)
         val ETemail=rootView.findViewById<EditText>(R.id.emailSignup)
-        buttonBack.setOnClickListener {
+        toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
         buttonJoin.setOnClickListener {
             val nickname = ETnickname.text.toString()
-            val id = ETid.text.toString()
+
             val password = ETpassword.text.toString()
             val pwck = ETpwck.text.toString()
             val email=ETemail.text.toString()
-            if (nickname == "" || id == "" || password == "" || pwck == ""||email=="") {
+            if (nickname == "" || password == "" || pwck == ""||email=="") {
                 Toast.makeText(activity, "입력을 완료해주세요.", Toast.LENGTH_SHORT).show()
             }
 
@@ -55,6 +57,10 @@ class SignupFragment:BaseFragment() {
                         if(it.isSuccessful){
                             Toast.makeText(requireContext(),"회원가입 완료",Toast.LENGTH_SHORT).show()
                             findNavController().popBackStack()
+                            it.result.user?.uid
+                            if(it.result.user?.uid!=null) {
+                                nicknameInteractor.createDataWithId(it.result.user?.uid.toString(),Username(nickname))
+                            }
                         }else{
                         }
                     }.addOnFailureListener {

@@ -30,6 +30,7 @@ class WriteFragment: BaseFragment() {
         val ETcontent = rootView.findViewById<EditText>(R.id.writeContent)
         val image = rootView.findViewById<ImageView>(R.id.writeImageView)
         var categoryCK = false
+        var category:String=""
 
         val feedInteractor=FeedInteractor()
         feedInteractor.publishCreateSuccess.subscribe {
@@ -48,7 +49,7 @@ class WriteFragment: BaseFragment() {
             }
             else {
                 // db에 저장
-                val feed= Feed("닉네임1", Date(),null,content)
+                val feed= Feed("","닉네임1", Date(),null,content,category)
                 feedInteractor.createData(feed)
 
             }
@@ -74,17 +75,7 @@ class WriteFragment: BaseFragment() {
                 }
                 else {
                     categoryCK = true
-                    when(position) {
-                        1   ->  {
-
-                        }
-                        2   ->  {
-
-                        }
-                        3   ->  {
-
-                        }
-                    }
+                   category=items[position]
                 }
             }
 

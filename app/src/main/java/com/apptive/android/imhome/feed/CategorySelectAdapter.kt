@@ -1,9 +1,11 @@
 package com.apptive.android.imhome.feed
 
+import android.graphics.Color
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
 import com.apptive.android.imhome.R
@@ -29,7 +31,7 @@ class CategorySelectAdapter:BaseAdapter<CategorySelectAdapter.CategorySelectView
                 setText(category)
 
                 setBackgroundResource(R.drawable.checkbox_custom)
-                //setButtonIcon(null)
+                setButtonDrawable(null)
                 setPadding(30,10,30,10)
                 //setMinWidth(50)
                 setLayoutParams(ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT))

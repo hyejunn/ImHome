@@ -14,7 +14,7 @@ import com.apptive.android.imhome.databinding.ItemFeedBinding
 import com.apptive.android.imhome.utility.DateUtility
 import java.util.*
 
-class FeedAdapter:BaseAdapter<RecyclerView.ViewHolder,Feed>() {
+class FeedAdapter(categoryList:List<String>):BaseAdapter<RecyclerView.ViewHolder,Feed>() {
 
 
     interface CategoryCallBackListener{
@@ -26,11 +26,12 @@ class FeedAdapter:BaseAdapter<RecyclerView.ViewHolder,Feed>() {
     }
 
     private var selectedCategory=mutableListOf<String>()
-    val sampleList=listOf("카테고리A","카테고리B","카테고리C")
+
 
     private val categoryAdapter=CategorySelectAdapter().apply{
         this.setSelectedCategory(selectedCategory)
-        refreshData(sampleList)
+
+        refreshData( categoryList)
     }
 
     override fun getItemViewType(position: Int): Int {
