@@ -1,36 +1,50 @@
 package com.apptive.android.imhome.write
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.apptive.android.imhome.R
 import com.apptive.android.imhome.baseClass.BaseFragment
 import com.apptive.android.imhome.feed.Feed
 import com.apptive.android.imhome.feed.FeedInteractor
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import java.text.SimpleDateFormat
 import java.util.*
 
 class WriteFragment: BaseFragment() {
+    private lateinit var rootView : View
+    private lateinit var fbStorage : FirebaseStorage
+    var ImageData : Uri? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_write, container, false)
-
+        rootView = inflater.inflate(R.layout.fragment_write, container, false)
+        lateinit var category:String
         val writeButton = rootView.findViewById<Button>(R.id.writeButton)
         val ETcontent = rootView.findViewById<EditText>(R.id.writeContent)
         val image = rootView.findViewById<ImageView>(R.id.writeImageView)
         var categoryCK = false
         var category:String=""
+
+        fbStorage = FirebaseStorage.getInstance()
+
 
         val feedInteractor=FeedInteractor()
         feedInteractor.publishCreateSuccess.subscribe {
@@ -50,6 +64,9 @@ class WriteFragment: BaseFragment() {
             else {
                 // db에 저장
                 val feed= Feed("","닉네임1", Date(),null,content,category)
+
+                funImageUpload(rootView)
+
                 feedInteractor.createData(feed)
 
             }
@@ -75,7 +92,7 @@ class WriteFragment: BaseFragment() {
                 }
                 else {
                     categoryCK = true
-                   category=items[position]
+                    category=items[position]
                 }
             }
 
@@ -107,15 +124,27 @@ class WriteFragment: BaseFragment() {
         }
         when(requestCode) {
             10 -> {
-                var ImageData: Uri? = data?.data
+                ImageData = data?.data
                 try {
                     val pt: ImageView = requireView().findViewById(R.id.writeImageView)
                     pt.setImageURI(ImageData)
                     pt.setBackgroundResource(R.color.white)
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
+        }
+    }
+    private fun funImageUpload(view : View){
+
+        var timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var imgFileName = "IMAGE_" + timeStamp + "_.png"
+        var storageRef = fbStorage?.reference?.child(imgFileName)
+        Log.d("please", "plz")
+        storageRef?.putFile(ImageData!!)?.addOnSuccessListener {
+            Log.d("please", "success")
+            Toast.makeText(view.context, "Image Uploaded", Toast.LENGTH_SHORT).show()
         }
     }
 
