@@ -20,7 +20,6 @@ import java.util.*
 
 class FeedAdapter(categoryList:List<String>):BaseAdapter<RecyclerView.ViewHolder,Feed>() {
 
-
     interface CategoryCallBackListener{
         fun onCategorySelectChangeCallback(clickedItem:List<String>)
     }

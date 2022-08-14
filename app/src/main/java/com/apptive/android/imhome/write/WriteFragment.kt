@@ -66,7 +66,7 @@ class WriteFragment: BaseFragment() {
             else {
                 // db에 저장
 
-                val id = DateUtility.formatDate(Date(),"yyyyMMdd")
+                val id = DateUtility.formatDate(Date(),"yyyyMMddHHmmss")
                 val feed= Feed(id,UserInfoManager.getNickname().toString(), Date(),id,content,category)
                 feedInteractor.createDataWithId(id, feed)
 

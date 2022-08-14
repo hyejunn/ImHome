@@ -2,8 +2,13 @@
 <resources>
     <string-array name="categories">
         <item>선택해주세요.</item>
-        <item>카테고리A</item>
-        <item>카테고리B</item>
-        <item>카테고리C</item>
+        <item>음식</item>
+        <item>취미</item>
+        <item>펫</item>
+        <item>홈트</item>
+        <item>게임</item>
+        <item>외출</item>
+        <item>기타</item>
+
     </string-array>
 </resources>
