@@ -23,7 +23,7 @@ class FeedInteractor : BaseInteractor<Feed>() {
 
         Log.d("checkforfor",category.toString())
 
-        val feed=Feed(id,name.toString(), date?.toDate(),null,contents.toString(),category.toString())
+        val feed=Feed(id,name.toString(), date?.toDate(),image,contents.toString(),category.toString())
 
         return feed
     }

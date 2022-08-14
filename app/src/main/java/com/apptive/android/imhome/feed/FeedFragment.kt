@@ -16,6 +16,7 @@ import com.apptive.android.imhome.baseClass.BaseFragment
 import com.apptive.android.imhome.baseClass.RecyclerViewDecoration
 import com.apptive.android.imhome.databinding.FragmentFeedBinding
 import com.apptive.android.imhome.signup.NicknameInteractor
+import com.apptive.android.imhome.utility.UserInfoManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -28,6 +29,7 @@ class FeedFragment:BaseFragment() {
     private val auth: FirebaseAuth = Firebase.auth
     private val currentUser=auth.currentUser
 
+    private var selected= listOf<String>()
     private lateinit var binding: FragmentFeedBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,10 +48,12 @@ class FeedFragment:BaseFragment() {
             Toast.makeText(requireContext(),"유저 아이디를 찾을 수 없습니다. 다시 로그인해주세요.",Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
         }else{
+
             nickNameInteractor.getDocumentData(nickNameInteractor.ref.document(currentUser.uid))
         }
 
         nickNameInteractor.publishData.subscribe {
+            UserInfoManager.setNickname(it.first().username)
             if(it.isNotEmpty())  binding.feedNickname.setText("\' ${it.first().username} \' 님 환영해요!")
         }
         val deco= RecyclerViewDecoration(0,0,0,15,requireContext())
@@ -70,6 +74,7 @@ class FeedFragment:BaseFragment() {
         adapter.setOnCategorySelectChanged(object:FeedAdapter.CategoryCallBackListener{
             override fun onCategorySelectChangeCallback(clickedItem: List<String>) {
                 //TODO(카테고리 선택 내용 올라옴)
+                selected=clickedItem
                 if(clickedItem.isNotEmpty()){
                     val query=feedInteractor.ref.whereIn("category",clickedItem)
                     feedInteractor.getData(query)
@@ -92,7 +97,11 @@ class FeedFragment:BaseFragment() {
         }
 
         binding.feedSwipeRefreshLayout.setOnRefreshListener {
-            feedInteractor.getData(feedInteractor.ref)
+            if(selected.isEmpty()) feedInteractor.getData(feedInteractor.ref)
+            else{
+                val query=feedInteractor.ref.whereIn("category",selected)
+                feedInteractor.getData(query)
+            }
 
         }
 

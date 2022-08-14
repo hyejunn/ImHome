@@ -92,6 +92,7 @@ abstract class BaseInteractor<RES_T> {
                 Log.d("baseInteractor","$this : createData : $data || ${ref.path}")
 
                 publishCreateSuccess.onNext(data)
+
             }
             .addOnFailureListener {  }
 

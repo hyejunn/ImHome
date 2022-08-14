@@ -24,6 +24,7 @@ import com.apptive.android.imhome.utility.DateUtility
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
+import com.apptive.android.imhome.utility.UserInfoManager
 import java.util.*
 
 class WriteFragment: BaseFragment() {
@@ -38,7 +39,7 @@ class WriteFragment: BaseFragment() {
     ): View? {
         rootView = inflater.inflate(R.layout.fragment_write, container, false)
         lateinit var category:String
-        val writeButton = rootView.findViewById<Button>(R.id.writeButton)
+        val writeButton = rootView.findViewById<TextView>(R.id.writeButton)
         val ETcontent = rootView.findViewById<EditText>(R.id.writeContent)
         val image = rootView.findViewById<ImageView>(R.id.writeImageView)
         var categoryCK = false
@@ -64,11 +65,9 @@ class WriteFragment: BaseFragment() {
             }
             else {
                 // db에 저장
+
                 val id = DateUtility.formatDate(Date(),"yyyyMMdd")
-                val feed= Feed(id,"닉네임1", Date(),id,content,category)
-
-
-
+                val feed= Feed(id,UserInfoManager.getNickname().toString(), Date(),id,content,category)
                 feedInteractor.createDataWithId(id, feed)
 
             }
@@ -145,7 +144,7 @@ class WriteFragment: BaseFragment() {
         Log.d("please", "plz")
         storageRef?.putFile(ImageData!!)?.addOnSuccessListener {
             Log.d("please", "success")
-            Toast.makeText(view.context, "Image Uploaded", Toast.LENGTH_SHORT).show()
+
         }
     }
 
