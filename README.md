@@ -14,7 +14,7 @@
 &nbsp;
 
 ## Contributors
- * 안혜준, 김유빈, 구한서, 김수현
+ * [안혜준](https://github.com/hyejunn), [김유빈](https://github.com/gogumaC), 구한서, 김수현
 
  ## License
  
