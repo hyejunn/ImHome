@@ -15,3 +15,7 @@
 
 ## Contributors
  * 안혜준, 김유빈, 구한서, 김수현
+
+ ## License
+ 
+ The code and styles are licensed under the MIT license
